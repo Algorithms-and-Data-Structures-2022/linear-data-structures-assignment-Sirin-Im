@@ -40,18 +40,19 @@ namespace assignment {
   }
 
   bool DynamicArray::Insert(int index, int value) {
-    if (index <= size_ && index >= 0) {
-      if (size_ >= capacity_) {
-        Resize(capacity_+ kCapacityGrowthCoefficient);
-      }
-      for (int i = size_-1; i >= index; i--) {
-        data_[i + 1] = data_[i];
-      }
-      data_[index] = value;
-      size_++;
-      return true;
+    if ((index < 0)||(index > size_)) {
+      return false;
     }
-    return false;
+    if (size_ >= capacity_) {
+      Resize(capacity_+ kCapacityGrowthCoefficient);
+    }
+
+    for (int i = size_-1; i >= index; i--) {
+      data_[i + 1] = data_[i];
+    }
+    data_[index] = value;
+    size_++;
+    return true;
   }
 
   bool DynamicArray::Set(int index, int new_value) {
@@ -128,9 +129,8 @@ namespace assignment {
       capacity_ = new_capacity;
       data_ = data;
       return true;
-    }else {
-      return false;
     }
+    return false;
   }
 
   // ДЛЯ ТЕСТИРОВАНИЯ
